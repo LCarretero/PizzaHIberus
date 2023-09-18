@@ -10,7 +10,7 @@ spring:
           uri: lb://usuarios
           predicates:
             - Path=/usuarios/**
-        - id: micro-prendas
-          uri: lb://prendas
+        - id: micro-pizzas
+          uri: lb://pizzas
           predicates:
-            - Path=/prendas/**
+            - Path=/pizzas/**
