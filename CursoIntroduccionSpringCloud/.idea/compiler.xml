@@ -10,13 +10,13 @@
         <module name="pizza-write" />
         <module name="config-server" />
         <module name="gateway-server" />
-        <module name="pizzas-read" />
         <module name="user-crud" />
         <module name="eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="pizza-read" target="11" />
+      <module name="pizzas-read (1)" target="11" />
       <module name="pizzas-read (2)" target="11" />
       <module name="pizzas-readdd" target="11" />
       <module name="pizzas-write" target="11" />
@@ -30,6 +30,7 @@
       <module name="pizza-read" options="-parameters" />
       <module name="pizza-write" options="-parameters" />
       <module name="pizzas-read" options="-parameters" />
+      <module name="pizzas-read (1)" options="-parameters" />
       <module name="pizzas-read (2)" options="-parameters" />
       <module name="pizzas-readdd" options="-parameters" />
       <module name="pizzas-write" options="-parameters" />
