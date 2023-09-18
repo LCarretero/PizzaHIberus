@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "prendas")
 @Entity
 @Getter
-public class Prenda {
+public class Pizza {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,13 +19,4 @@ public class Prenda {
     @Setter
     @Column(name = "nombre")
     private String nombre;
-    @Setter
-    @Column(name = "talla")
-    private String talla;
-    @Setter
-    @Column(name = "color")
-    private String color;
-    @Column(name = "idUsuario")
-    private Integer idUsuario;
-
 }

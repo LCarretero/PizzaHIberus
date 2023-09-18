@@ -11,8 +11,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class ConfigSwagger {
-    private static final String TITLE = "Prendas API";
-    private static final String DESCRIPTION = "Description API Prendas";
+    private static final String TITLE = "Pizzas API";
+    private static final String DESCRIPTION = "Description API Pizzas";
     private static final String BASE_PACKAGE = "com.hiberus.controladores";
     private static final String VERSION = "v1";
 

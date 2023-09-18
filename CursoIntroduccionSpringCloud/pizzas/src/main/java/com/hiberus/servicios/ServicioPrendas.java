@@ -1,6 +1,6 @@
 package com.hiberus.servicios;
 
-import com.hiberus.modelos.Prenda;
+import com.hiberus.modelos.Pizza;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface ServicioPrendas {
 
-    List<Prenda> obtenerPrendas();
+    List<Pizza> obtenerPrendas();
 
-    List<Prenda> obtenerPrendasPorIdUsuario(Integer idUsuario);
+    List<Pizza> obtenerPrendasPorIdUsuario(Integer idUsuario);
 }

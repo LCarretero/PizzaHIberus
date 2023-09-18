@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>usuarios</module>
-        <module>prendas</module>
+        <module>pizzas</module>
         <module>config-server</module>
         <module>eureka-server</module>
         <module>gateway-server</module>

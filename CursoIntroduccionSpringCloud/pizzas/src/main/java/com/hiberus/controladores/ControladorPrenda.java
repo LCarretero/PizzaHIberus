@@ -1,7 +1,7 @@
 package com.hiberus.controladores;
 
 import com.hiberus.dto.PrendaDto;
-import com.hiberus.modelos.Prenda;
+import com.hiberus.modelos.Pizza;
 import com.hiberus.servicios.ServicioPrendas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,15 +23,15 @@ public class ControladorPrenda {
 
     @GetMapping(value = "/obtenerPrendas")
     ResponseEntity<List<PrendaDto>> obtenerPrendas(){
-        List<Prenda> listaPrendas = servicioPrendas.obtenerPrendas();
+        List<Pizza> listaPizzas = servicioPrendas.obtenerPrendas();
         List<PrendaDto> listaPrendasDto = new ArrayList<>();
-        for(Prenda prenda : listaPrendas){
+        for(Pizza pizza : listaPizzas){
             PrendaDto prendaDto = PrendaDto.builder()
-                    .id(prenda.getId())
-                    .nombre(prenda.getNombre())
-                    .talla(prenda.getTalla())
-                    .color(prenda.getColor())
-                    .idUsuario(prenda.getIdUsuario())
+                    .id(pizza.getId())
+                    .nombre(pizza.getNombre())
+                    .talla(pizza.getTalla())
+                    .color(pizza.getColor())
+                    .idUsuario(pizza.getIdUsuario())
                     .build();
             listaPrendasDto.add(prendaDto);
         }
@@ -40,15 +40,15 @@ public class ControladorPrenda {
 
     @GetMapping(value = "/obtenerPrendasPorUsuario")
     ResponseEntity<List<PrendaDto>> obtenerPrendasPorUsuario(@RequestParam Integer idUsuario){
-        List<Prenda> listaPrendas = servicioPrendas.obtenerPrendasPorIdUsuario(idUsuario);
+        List<Pizza> listaPizzas = servicioPrendas.obtenerPrendasPorIdUsuario(idUsuario);
         List<PrendaDto> listaPrendasDto = new ArrayList<>();
-        for(Prenda prenda : listaPrendas){
+        for(Pizza pizza : listaPizzas){
             PrendaDto prendaDto = PrendaDto.builder()
-                    .id(prenda.getId())
-                    .nombre(prenda.getNombre())
-                    .talla(prenda.getTalla())
-                    .color(prenda.getColor())
-                    .idUsuario(prenda.getIdUsuario())
+                    .id(pizza.getId())
+                    .nombre(pizza.getNombre())
+                    .talla(pizza.getTalla())
+                    .color(pizza.getColor())
+                    .idUsuario(pizza.getIdUsuario())
                     .build();
             listaPrendasDto.add(prendaDto);
         }

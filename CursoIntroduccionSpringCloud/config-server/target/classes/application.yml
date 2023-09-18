@@ -1,14 +1,14 @@
-# HTTP Server
 server:
   port: 8888
 
 spring:
   application:
     name: config-server
-  # Spring Cloud Config Server Repository
   cloud:
     config:
+      enabled: true
       server:
-        git:
-          uri: http://gitlab.hiberus.com/jmora/introSpringCloud-Configuracion.git
-          default-label: master
+        native:
+          searchLocations: classpath:/configuracion
+  profiles:
+    active: native
