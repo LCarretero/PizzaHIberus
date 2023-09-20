@@ -1,8 +1,9 @@
-package com.hiberus.servicios.Impl;
+package com.hiberus.services.Impl;
 
-import com.hiberus.modelos.Usuario;
-import com.hiberus.repositorios.RepositorioUsuario;
-import com.hiberus.servicios.ServicioUsuarios;
+
+import com.hiberus.models.User;
+import com.hiberus.repositories.UserRepository;
+import com.hiberus.services.ServicioUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +12,8 @@ import java.util.List;
 @Service
 public class ServicioUsuariosImpl implements ServicioUsuarios {
      @Autowired
-    RepositorioUsuario repositorioUsuario;
-    public List<Usuario> obtenerUsuarios(){
+     UserRepository repositorioUsuario;
+    public List<User> obtenerUsuarios(){
         return repositorioUsuario.findAll();
     }
 }

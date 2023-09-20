@@ -15,7 +15,7 @@ spring:
     activate:
       on-profile: default
   application:
-    name: usuarios
+    name: users
     zipkin: http://zipkin:9411
   datasource:
     url: jdbc:postgresql://localhost:5433/postgres

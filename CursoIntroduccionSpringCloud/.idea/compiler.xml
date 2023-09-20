@@ -10,6 +10,7 @@
         <module name="pizza-write" />
         <module name="config-server" />
         <module name="gateway-server" />
+        <module name="pizzas-read" />
         <module name="user-crud" />
         <module name="eureka-server" />
       </profile>

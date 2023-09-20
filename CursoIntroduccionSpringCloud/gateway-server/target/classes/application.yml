@@ -6,10 +6,10 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: micro-usuarios
-          uri: lb://usuarios
+        - id: micro-users
+          uri: lb://users
           predicates:
-            - Path=/usuarios/**
+            - Path=/users/**
         - id: micro-pizzasRead
           uri: lb://pizzasRead
           predicates:

@@ -1,7 +1,8 @@
 package com.hiberus.config;
 
-import com.hiberus.modelos.Usuario;
-import com.hiberus.repositorios.RepositorioUsuario;
+
+import com.hiberus.models.User;
+import com.hiberus.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,24 +13,24 @@ import java.util.List;
 @Configuration
 public class ConfigData {
     @Bean("ConfigData")
-    CommandLineRunner commandLineRunner(RepositorioUsuario repositorioUsuario) {
+    CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
-            Usuario usuario1 =Usuario.builder()
-                    .nombre("Emilio")
-                    .pizzasFav(new ArrayList<>())
+            User user1 =User.builder()
+                    .name("Emilio")
+                    .favouritesPizzas(new ArrayList<>())
                     .build();
 
-            Usuario usuario2 =Usuario.builder()
-                    .nombre("Lucía")
-                    .pizzasFav(new ArrayList<>())
+            User user2 =User.builder()
+                    .name("Lucía")
+                    .favouritesPizzas(new ArrayList<>())
                     .build();
 
-            Usuario usuario3 =Usuario.builder()
-                    .nombre("Matías")
-                    .pizzasFav(new ArrayList<>())
+            User user3 =User.builder()
+                    .name("Matías")
+                    .favouritesPizzas(new ArrayList<>())
                     .build();
 
-            repositorioUsuario.saveAll(List.of(usuario1, usuario2,usuario3));
+            userRepository.saveAll(List.of(user1, user2,user3));
         };
     }
 }

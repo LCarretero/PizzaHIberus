@@ -1,9 +1,9 @@
-package com.hiberus.controladores;
+package com.hiberus.controllers;
 
 import com.hiberus.dto.PizzaDto;
 import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.modelos.Pizza;
-import com.hiberus.servicios.ServicioPizzas;
+import com.hiberus.services.ServicioPizzas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

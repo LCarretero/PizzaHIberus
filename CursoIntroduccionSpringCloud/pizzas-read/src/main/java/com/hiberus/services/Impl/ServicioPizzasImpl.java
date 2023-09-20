@@ -1,10 +1,10 @@
-package com.hiberus.servicios.Impl;
+package com.hiberus.services.Impl;
 
 import com.hiberus.dto.PizzaDto;
 import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.modelos.Pizza;
 import com.hiberus.repositorios.RepositorioPizza;
-import com.hiberus.servicios.ServicioPizzas;
+import com.hiberus.services.ServicioPizzas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
