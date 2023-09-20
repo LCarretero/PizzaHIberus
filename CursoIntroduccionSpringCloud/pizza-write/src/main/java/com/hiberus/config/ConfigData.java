@@ -1,39 +1,40 @@
 package com.hiberus.config;
 
 import com.hiberus.modelos.Pizza;
-import com.hiberus.repositorios.RepositorioPizza;
+import com.hiberus.repositorios.PizzaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
+import java.util.UUID;
 
 @Configuration
 public class ConfigData {
     @Bean("ConfigData")
-    CommandLineRunner commandLineRunner(RepositorioPizza repositorioPizza) {
+    CommandLineRunner commandLineRunner(PizzaRepository pizzaRepository) {
         return args -> {
             Pizza pizza1 = Pizza.builder()
-                    .nombre("Barbacoa")
-                    .id(1)
+                    .name("Barbacoa")
+                    .id(UUID.randomUUID())
                     .build();
 
             Pizza pizza2 = Pizza.builder()
-                    .nombre("4 quesos")
-                    .id(1)
+                    .name("4 quesos")
+                    .id(UUID.randomUUID())
                     .build();
 
             Pizza pizza3 = Pizza.builder()
-                    .nombre("Carbonara")
-                    .id(2)
+                    .name("Carbonara")
+                    .id(UUID.randomUUID())
                     .build();
 
             Pizza pizza4 = Pizza.builder()
-                    .nombre("Caprichosa")
-                    .id(3)
+                    .name("Caprichosa")
+                    .id(UUID.randomUUID())
                     .build();
 
-            repositorioPizza.saveAll(List.of(pizza1, pizza2, pizza3, pizza4));
+            pizzaRepository.saveAll(List.of(pizza1, pizza2, pizza3, pizza4));
         };
     }
 }

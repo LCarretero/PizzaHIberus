@@ -1,9 +1,17 @@
 package com.hiberus.controllers;
 
+import com.hiberus.dto.PizzaDTO;
+import com.hiberus.dto.UserDTO;
 import com.hiberus.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -13,15 +21,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok(new ArrayList<>());
+    }
 
-//    @GetMapping(value = "/obtenerUsuarios")
-//    public ResponseEntity <List<UserDTO>> obtenerUsuarios(){
-//        return userService.obtenerUsuarios().stream().map(UserMapper.INSTANCE::mapToDTO).collect(Collectors.toList());
-//    }
-
-//    @GetMapping(value = "/obtenerPizzasUsuario")
-//    public ResponseEntity <List<PizzaDto>> obtenerPizzasUsuario(@RequestParam Integer idUsuario){
-//        List<PizzaDto> listaPizzasUsuario = servicioPizzas.obtenerPizzasPorUsuario(idUsuario);
-//        return new ResponseEntity<>(listaPizzasUsuario,HttpStatus.OK);
-//    }
+    @GetMapping(value = "/favourites")
+    public ResponseEntity<List<PizzaDTO>> favourites(@RequestParam Integer idUsuario) {
+        return ResponseEntity.ok(new ArrayList<>());
+    }
 }

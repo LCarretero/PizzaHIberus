@@ -4,8 +4,8 @@ import com.hiberus.modelos.Pizza;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface RepositorioPizza extends JpaRepository<Pizza,Long> {
+public interface PizzaRepository extends JpaRepository<Pizza, UUID> {
 }

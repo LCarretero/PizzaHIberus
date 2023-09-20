@@ -3,6 +3,7 @@ package com.hiberus.modelos;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Builder
 @NoArgsConstructor
@@ -12,10 +13,10 @@ import javax.persistence.*;
 @Getter
 public class Pizza {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
     @Column(name = "id")
-    private Integer id;
+    private UUID id;
     @Setter
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "name")
+    private String name;
 }
