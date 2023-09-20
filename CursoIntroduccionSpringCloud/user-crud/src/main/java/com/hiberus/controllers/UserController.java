@@ -1,6 +1,6 @@
 package com.hiberus.controllers;
 
-import com.hiberus.services.ServicioUsuarios;
+import com.hiberus.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    ServicioUsuarios servicioUsuarios;
+    UserService userService;
 
 
 //    @GetMapping(value = "/obtenerUsuarios")
 //    public ResponseEntity <List<UserDTO>> obtenerUsuarios(){
-//        return servicioUsuarios.obtenerUsuarios().stream().map(UserMapper.INSTANCE::mapToDTO).collect(Collectors.toList());
+//        return userService.obtenerUsuarios().stream().map(UserMapper.INSTANCE::mapToDTO).collect(Collectors.toList());
 //    }
 
 //    @GetMapping(value = "/obtenerPizzasUsuario")

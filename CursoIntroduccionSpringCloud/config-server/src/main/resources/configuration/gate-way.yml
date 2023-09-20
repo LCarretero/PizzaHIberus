@@ -1,0 +1,17 @@
+server:
+  port: 9000
+  cloud:
+    gateway:
+      routes:
+        - id: micro-users
+          uri: lb://users
+          predicates:
+            - Path=/users/**
+        - id: micro-pizzasRead
+          uri: lb://pizzasRead
+          predicates:
+            - Path=/pizzasRead/**
+        - id: micro-pizzasWrite
+          uri: lb://pizzasWrite
+          predicates:
+            - Path=/pizzasWrite/**

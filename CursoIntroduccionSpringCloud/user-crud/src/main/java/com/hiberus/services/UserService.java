@@ -4,6 +4,6 @@ import com.hiberus.models.User;
 
 import java.util.List;
 
-public interface ServicioUsuarios {
+public interface UserService {
     List<User> obtenerUsuarios();
 }
