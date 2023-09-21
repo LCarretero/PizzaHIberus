@@ -1,8 +1,7 @@
 version: '3'
 
 services:
-
-  pricer_db:
+  pizza_db:
     image: postgres
     container_name: "pizzeberus_db"
     ports:
@@ -12,7 +11,7 @@ services:
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: postgres
       volumes:
-        -db-data:/var/lib/postgresql/data
+        -./pizza_db-data:/var/lib/postgresql/data
 
   user_db:
     image: postgres
@@ -24,7 +23,7 @@ services:
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: postgres
       volumes:
-        -user_db-data:/var/lib/postgresql/data
+        -./user_db-data:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3.7.6-management

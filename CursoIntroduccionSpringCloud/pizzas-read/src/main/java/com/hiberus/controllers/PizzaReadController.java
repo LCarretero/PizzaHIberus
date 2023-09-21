@@ -27,12 +27,12 @@ public class PizzaReadController {
         }
     }
 
-    @GetMapping(name = "/all")
+    @GetMapping("/all")
     public ResponseEntity<List<PizzaDTO>> getAllPizzas() {
         return ResponseEntity.ok(pizzaService.getAllPizzasDTO());
     }
 
-    @GetMapping(name = "/pizzas")
+    @GetMapping()
     public ResponseEntity<List<Pizza>> getPizzasInfo(@RequestHeader(value = "Authorization") String password) {
         try {
             return ResponseEntity.ok(pizzaService.getAllPizzas(password));

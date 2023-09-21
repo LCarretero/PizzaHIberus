@@ -18,10 +18,10 @@ spring:
     name: pizzasRead
     zipkin: http://zipkin:9411
   datasource:
-      url: jdbc:postgresql://localhost:5432/postgres
-      username: postgres
-      password: admin123
-      driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin123
+    driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
