@@ -3,14 +3,18 @@ package com.hiberus.controllers;
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.exceptions.PizzaUnauthorizedException;
+import com.hiberus.mapper.PizzaMapper;
 import com.hiberus.modelos.Pizza;
 import com.hiberus.services.PizzaService;
+import org.hibernate.mapping.Collection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/pizzas")
@@ -21,7 +25,7 @@ public class PizzaReadController {
     @GetMapping("/{id}")
     public ResponseEntity<PizzaDTO> getPizza(@PathVariable UUID id) {
         try {
-            return ResponseEntity.ok(pizzaService.getPizza(id));
+            return ResponseEntity.ok(PizzaMapper.INSTANCE.mapToDTO(pizzaService.getPizza(id)));
         } catch (PizzaNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -29,15 +33,14 @@ public class PizzaReadController {
 
     @GetMapping("/all")
     public ResponseEntity<List<PizzaDTO>> getAllPizzas() {
-        return ResponseEntity.ok(pizzaService.getAllPizzasDTO());
+        return ResponseEntity.ok(pizzaService.getAllPizzas().stream().map(PizzaMapper.INSTANCE::mapToDTO).collect(Collectors.toList()));
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Pizza>> getPizzasInfo(@RequestHeader(value = "Authorization") String password) {
-        try {
-            return ResponseEntity.ok(pizzaService.getAllPizzas(password));
-        } catch (PizzaUnauthorizedException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+
+    @GetMapping(value = "/favs")
+    public ResponseEntity<List<PizzaDTO>> obtainFavouritesPizzas(@RequestBody List<UUID> idPizzas) {
+        return ResponseEntity.ok(pizzaService.favs(idPizzas).stream()
+                .map(PizzaMapper.INSTANCE::mapToDTO)
+                .collect(Collectors.toList()));
     }
 }

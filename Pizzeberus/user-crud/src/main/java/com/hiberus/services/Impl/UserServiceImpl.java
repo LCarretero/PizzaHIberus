@@ -6,6 +6,7 @@ import com.hiberus.exceptions.UserBadRequestException;
 import com.hiberus.exceptions.UserNotFoundException;
 import com.hiberus.exceptions.UserUnauthorizedException;
 import com.hiberus.mappers.UserMapper;
+import com.hiberus.models.UpdatePizza;
 import com.hiberus.models.User;
 import com.hiberus.repositories.UserRepository;
 import com.hiberus.services.UserService;
@@ -55,16 +56,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO addPizza(UUID userId, UUID pizzaId) throws UserNotFoundException {
-        User userDB = obtainUser(userId);
-        userDB.getFavouritesPizzas().add(pizzaId);
+    public UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException {
+        User userDB = obtainUser(updatePizza.getUserId());
+        userDB.getFavouritesPizzas().add(updatePizza.getPizzaId());
         return UserMapper.INSTANCE.mapToDTO(saveUser(userDB));
     }
 
     @Override
-    public UserDTO deletePizza(UUID userId, UUID pizzaId) throws UserNotFoundException {
-        User userDb = obtainUser(userId);
-        if (userDb.getFavouritesPizzas().remove(pizzaId)) return UserMapper.INSTANCE.mapToDTO(saveUser(userDb));
+    public UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException {
+        User userDb = obtainUser(updatePizza.getUserId());
+        if (userDb.getFavouritesPizzas().remove(updatePizza.getPizzaId()))
+            return UserMapper.INSTANCE.mapToDTO(saveUser(userDb));
         return UserMapper.INSTANCE.mapToDTO(userDb);
     }
 

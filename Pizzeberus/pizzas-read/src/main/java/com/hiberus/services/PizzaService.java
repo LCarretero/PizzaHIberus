@@ -12,9 +12,9 @@ import java.util.UUID;
 @Service
 public interface PizzaService {
 
-    List<Pizza> getAllPizzas(String password) throws PizzaUnauthorizedException;
+    List<Pizza> getAllPizzas();
 
-    PizzaDTO getPizza(UUID id) throws PizzaNotFoundException;
+    Pizza getPizza(UUID id) throws PizzaNotFoundException;
 
-    List<PizzaDTO> getAllPizzasDTO();
+    List<Pizza> favs(List<UUID> pizzaIdList);
 }

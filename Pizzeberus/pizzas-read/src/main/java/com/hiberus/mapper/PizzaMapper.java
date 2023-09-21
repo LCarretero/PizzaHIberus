@@ -5,7 +5,7 @@ import com.hiberus.modelos.Pizza;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", imports = Pizza.class)
+@Mapper(componentModel = "spring")
 public interface PizzaMapper {
     PizzaMapper INSTANCE = Mappers.getMapper(PizzaMapper.class);
 

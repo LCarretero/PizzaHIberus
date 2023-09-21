@@ -20,26 +20,25 @@ public class PizzaServiceImpl implements PizzaService {
 
     @Autowired
     PizzaRepository pizzaRepository;
+
     @Value(value = "${PASSWORD}")
     private String PASSWORD;
 
     @Override
-    public List<PizzaDTO> getAllPizzasDTO() {
-        return pizzaRepository.findAll().stream().map(PizzaMapper.INSTANCE::mapToDTO).collect(Collectors.toList());
+    public List<Pizza> getAllPizzas() {
+        return pizzaRepository.findAll();
     }
 
     @Override
-    public List<Pizza> getAllPizzas(String password) throws PizzaUnauthorizedException {
-        if (password.equals(PASSWORD))
-            return pizzaRepository.findAll();
-        throw new PizzaUnauthorizedException();
-    }
-
-    @Override
-    public PizzaDTO getPizza(UUID idPizza) throws PizzaNotFoundException {
+    public Pizza getPizza(UUID idPizza) throws PizzaNotFoundException {
         Pizza result = pizzaRepository.findById(idPizza).orElse(null);
-        if (result == null)
-            throw new PizzaNotFoundException();
-        return PizzaMapper.INSTANCE.mapToDTO(result);
+        if (result == null) throw new PizzaNotFoundException();
+        return result;
+    }
+
+    public List<Pizza> favs(List<UUID> pizzaIdList) {
+        return pizzaIdList.stream()
+                .map(pizzaId -> pizzaRepository.findById(pizzaId).orElse(null))
+                .collect(Collectors.toList());
     }
 }
