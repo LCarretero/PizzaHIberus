@@ -10,6 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class UserDTO {
-    private final String name;
-    private final List<PizzaDTO> pizzas;
+    private List<PizzaDTO> pizzas;
+    private String name;
 }

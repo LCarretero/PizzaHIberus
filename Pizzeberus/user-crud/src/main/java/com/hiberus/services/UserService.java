@@ -1,5 +1,6 @@
 package com.hiberus.services;
 
+import com.hiberus.dto.PizzaDTO;
 import com.hiberus.dto.UserDTO;
 import com.hiberus.exceptions.UserBadRequestException;
 import com.hiberus.exceptions.UserNotFoundException;
@@ -25,4 +26,5 @@ public interface UserService {
 
     UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException;
 
+    List<PizzaDTO> getgetFavourites(UUID userId) throws UserNotFoundException;
 }

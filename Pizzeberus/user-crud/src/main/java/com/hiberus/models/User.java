@@ -19,10 +19,11 @@ import java.util.UUID;
 public class User {
     @JsonIgnoreProperties
     @Id
-    @GeneratedValue(generator = "uuid")
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     private String name;
     @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "id"))
     @JsonIgnoreProperties
     private List<UUID> favouritesPizzas;
 }

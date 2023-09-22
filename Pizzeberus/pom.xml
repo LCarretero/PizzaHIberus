@@ -9,11 +9,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>user-crud</module>
-        <module>pizzas-read</module>
+        <module>pizzaRead</module>
         <module>config-server</module>
         <module>eureka-server</module>
         <module>gateway-server</module>
-        <module>pizza-write</module>
+        <module>pizzaWrite</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

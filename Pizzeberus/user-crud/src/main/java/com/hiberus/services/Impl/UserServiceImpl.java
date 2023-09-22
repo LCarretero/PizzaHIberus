@@ -1,6 +1,8 @@
 package com.hiberus.services.Impl;
 
 
+import com.hiberus.clients.ClientsPizzas;
+import com.hiberus.dto.PizzaDTO;
 import com.hiberus.dto.UserDTO;
 import com.hiberus.exceptions.UserBadRequestException;
 import com.hiberus.exceptions.UserNotFoundException;
@@ -21,6 +23,9 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ClientsPizzas clientsPizzas;
+
     @Value(value = "${KEYPASS}")
     private String KEYPASS;
 
@@ -59,7 +64,9 @@ public class UserServiceImpl implements UserService {
     public UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
         userDB.getFavouritesPizzas().add(updatePizza.getPizzaId());
-        return UserMapper.INSTANCE.mapToDTO(saveUser(userDB));
+        List<PizzaDTO> userPizzas = clientsPizzas.obtainFavouritesPizzas(userDB.getFavouritesPizzas()).getBody();
+        saveUser(userDB);
+        return new UserDTO(userPizzas, userDB.getName());
     }
 
     @Override
@@ -68,6 +75,12 @@ public class UserServiceImpl implements UserService {
         if (userDb.getFavouritesPizzas().remove(updatePizza.getPizzaId()))
             return UserMapper.INSTANCE.mapToDTO(saveUser(userDb));
         return UserMapper.INSTANCE.mapToDTO(userDb);
+    }
+
+    @Override
+    public List<PizzaDTO> getgetFavourites(UUID userId) throws UserNotFoundException {
+        User userDb = obtainUser(userId);
+        return clientsPizzas.obtainFavouritesPizzas(userDb.getFavouritesPizzas()).getBody();
     }
 
     //region PRIVATE_METHODS

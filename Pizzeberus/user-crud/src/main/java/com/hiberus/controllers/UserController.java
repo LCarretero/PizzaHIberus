@@ -71,7 +71,7 @@ public class UserController {
     public ResponseEntity<UserDTO> addPizza(@RequestBody UpdatePizza updatePizza) {
         try {
             return ResponseEntity.ok(userService.addPizza(updatePizza));
-        } catch (Exception e) {
+        } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
