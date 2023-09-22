@@ -1,8 +1,6 @@
 package com.hiberus.services;
 
-import com.hiberus.dto.PizzaDTO;
 import com.hiberus.exceptions.PizzaNotFoundException;
-import com.hiberus.exceptions.PizzaUnauthorizedException;
 import com.hiberus.modelos.Pizza;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +15,5 @@ public interface PizzaService {
     Pizza getPizza(UUID id) throws PizzaNotFoundException;
 
     List<Pizza> favs(List<UUID> pizzaIdList);
+
 }

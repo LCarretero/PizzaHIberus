@@ -1,9 +1,6 @@
 package com.hiberus.services.Impl;
 
-import com.hiberus.dto.PizzaDTO;
 import com.hiberus.exceptions.PizzaNotFoundException;
-import com.hiberus.exceptions.PizzaUnauthorizedException;
-import com.hiberus.mapper.PizzaMapper;
 import com.hiberus.modelos.Pizza;
 import com.hiberus.repositorios.PizzaRepository;
 import com.hiberus.services.PizzaService;
@@ -36,6 +33,7 @@ public class PizzaServiceImpl implements PizzaService {
         return result;
     }
 
+    @Override
     public List<Pizza> favs(List<UUID> pizzaIdList) {
         return pizzaIdList.stream()
                 .map(pizzaId -> pizzaRepository.findById(pizzaId).orElse(null))

@@ -2,16 +2,11 @@ package com.hiberus.controllers;
 
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.exceptions.PizzaNotFoundException;
-import com.hiberus.exceptions.PizzaUnauthorizedException;
 import com.hiberus.mapper.PizzaMapper;
-import com.hiberus.modelos.Pizza;
 import com.hiberus.services.PizzaService;
-import org.hibernate.mapping.Collection;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -43,4 +38,5 @@ public class PizzaReadController {
                 .map(PizzaMapper.INSTANCE::mapToDTO)
                 .collect(Collectors.toList()));
     }
+
 }

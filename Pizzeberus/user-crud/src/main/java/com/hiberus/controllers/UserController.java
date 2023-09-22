@@ -5,7 +5,6 @@ import com.hiberus.dto.UserDTO;
 import com.hiberus.exceptions.UserBadRequestException;
 import com.hiberus.exceptions.UserNotFoundException;
 import com.hiberus.exceptions.UserUnauthorizedException;
-import com.hiberus.mappers.UserMapper;
 import com.hiberus.models.UpdatePizza;
 import com.hiberus.models.User;
 import com.hiberus.services.UserService;
@@ -20,7 +19,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/user")
 public class UserController {
 
     @Autowired
@@ -29,7 +28,8 @@ public class UserController {
     @PostMapping()
     public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
         try {
-            return ResponseEntity.ok(userService.createUser(user));
+            UserDTO result = userService.createUser(user);
+            return ResponseEntity.ok(result);
         } catch (UserBadRequestException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<UserDTO>> getAllUsers(@RequestHeader String auth) {
+    public ResponseEntity<List<User>> getAllUsers(@RequestHeader(name = "Auth") String auth) {
         try {
             return ResponseEntity.ok(userService.getAllUsers(auth));
         } catch (UserUnauthorizedException e) {
@@ -84,4 +84,15 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable(name = "id") UUID uuid) {
+        try {
+            return ResponseEntity.ok(userService.deleteUser(uuid));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
 }

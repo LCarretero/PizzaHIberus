@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,9 +30,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUsers(String auth) throws UserUnauthorizedException {
+    public List<User> getAllUsers(String auth) throws UserUnauthorizedException {
         if (!KEYPASS.equals(auth)) throw new UserUnauthorizedException();
-        return userRepository.findAll().stream().map(UserMapper.INSTANCE::mapToDTO).collect(Collectors.toList());
+        return userRepository.findAll();
     }
 
     @Override
@@ -50,9 +49,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID userId) throws UserNotFoundException {
+    public User deleteUser(UUID userId) throws UserNotFoundException {
         User userDB = obtainUser(userId);
         userRepository.delete(userDB);
+        return userDB;
     }
 
     @Override

@@ -13,13 +13,13 @@ import java.util.UUID;
 public interface UserService {
     UserDTO getUser(UUID userId) throws UserNotFoundException;
 
-    List<UserDTO> getAllUsers(String auth) throws UserUnauthorizedException;
+    List<User> getAllUsers(String auth) throws UserUnauthorizedException;
 
     UserDTO createUser(User user) throws UserBadRequestException;
 
     UserDTO updateUser(User user) throws UserNotFoundException;
 
-    void deleteUser(UUID userId) throws UserNotFoundException;
+    User deleteUser(UUID userId) throws UserNotFoundException;
 
     UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException;
 
