@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Builder
@@ -16,11 +15,10 @@ import java.util.UUID;
 public class User {
     @JsonIgnoreProperties
     @Id
-    @GeneratedValue(generator = "UUID")
     private UUID id;
     private String name;
     @ElementCollection
     @Setter
     @CollectionTable(joinColumns = @JoinColumn(name = "id"))
-    private List<UUID> favouritesPizzas;
+    private Set<UUID> favouritesPizzas;
 }

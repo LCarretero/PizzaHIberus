@@ -13,10 +13,7 @@ import java.util.UUID;
 @Getter
 public class Pizza {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @Column(name = "id")
     private UUID id;
     @Setter
-    @Column(name = "name")
     private String name;
 }

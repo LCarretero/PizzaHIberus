@@ -3,7 +3,7 @@ package com.hiberus.controllers;
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.mapper.PizzaMapper;
-import com.hiberus.services.PizzaService;
+import com.hiberus.services.PizzaReadService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,26 +17,26 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PizzaReadController {
 
-    private final PizzaService pizzaService;
+    private final PizzaReadService pizzaReadService;
 
     @GetMapping("/{id}")
     public ResponseEntity<PizzaDTO> getPizza(@PathVariable(name = "id") UUID id) {
         try {
-            return ResponseEntity.ok(PizzaMapper.INSTANCE.mapToDTO(pizzaService.getPizza(id)));
+            return ResponseEntity.ok(PizzaMapper.INSTANCE.mapToDTO(pizzaReadService.getPizza(id)));
         } catch (PizzaNotFoundException e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<PizzaDTO>> getAllPizzas() {
-        return ResponseEntity.ok(pizzaService.getAllPizzas().stream().map(PizzaMapper.INSTANCE::mapToDTO).collect(Collectors.toList()));
+        return ResponseEntity.ok(pizzaReadService.getAllPizzas().stream().map(PizzaMapper.INSTANCE::mapToDTO).collect(Collectors.toList()));
     }
 
 
     @GetMapping(value = "/favs")
     public ResponseEntity<List<PizzaDTO>> obtainFavouritesPizzas(@RequestParam(name = "idPizzas") List<UUID> idPizzas) {
-        return ResponseEntity.ok(pizzaService.getFavourites(idPizzas).stream()
+        return ResponseEntity.ok(pizzaReadService.getFavourites(idPizzas).stream()
                 .map(PizzaMapper.INSTANCE::mapToDTO)
                 .collect(Collectors.toList()));
     }

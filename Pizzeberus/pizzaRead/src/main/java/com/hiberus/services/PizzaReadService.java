@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public interface PizzaService {
+public interface PizzaReadService {
 
     List<Pizza> getAllPizzas();
 

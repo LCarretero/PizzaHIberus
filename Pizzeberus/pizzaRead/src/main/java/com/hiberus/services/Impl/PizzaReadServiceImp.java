@@ -3,7 +3,7 @@ package com.hiberus.services.Impl;
 import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.modelos.Pizza;
 import com.hiberus.repositorios.PizzaRepository;
-import com.hiberus.services.PizzaService;
+import com.hiberus.services.PizzaReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class PizzaServiceImpl implements PizzaService {
+public class PizzaReadServiceImp implements PizzaReadService {
 
     @Autowired
     PizzaRepository pizzaRepository;
-
-    @Value(value = "${PASSWORD}")
-    private String PASSWORD;
 
     @Override
     public List<Pizza> getAllPizzas() {

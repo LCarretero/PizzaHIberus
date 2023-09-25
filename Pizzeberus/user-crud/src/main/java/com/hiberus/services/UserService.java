@@ -2,6 +2,7 @@ package com.hiberus.services;
 
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.dto.UserDTO;
+import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.exceptions.UserBadRequestException;
 import com.hiberus.exceptions.UserNotFoundException;
 import com.hiberus.exceptions.UserUnauthorizedException;
@@ -22,7 +23,7 @@ public interface UserService {
 
     User deleteUser(UUID userId) throws UserNotFoundException;
 
-    UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException;
+    UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException;
 
     UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException;
 

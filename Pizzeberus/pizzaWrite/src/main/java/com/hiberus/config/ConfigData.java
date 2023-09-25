@@ -20,7 +20,7 @@ public class ConfigData {
                     .build();
 
             Pizza pizza2 = Pizza.builder()
-                    .name("4 quesos")
+                    .name("4 Quesos")
                     .id(UUID.fromString("3898375f-7044-468f-b652-10aa42ab6f4b"))
                     .build();
 
@@ -34,7 +34,12 @@ public class ConfigData {
                     .id(UUID.fromString("9f5473e0-2558-44fd-9fac-fc683b116307"))
                     .build();
 
-            pizzaRepository.saveAll(List.of(pizza1, pizza2, pizza3, pizza4));
+            Pizza pizza5 = Pizza.builder()
+                    .name("Celia Diabola")
+                    .id(UUID.fromString("66666666-6666-6666-6666-666666666666"))
+                    .build();
+
+            pizzaRepository.saveAll(List.of(pizza1, pizza2, pizza3, pizza4, pizza5));
         };
     }
 }

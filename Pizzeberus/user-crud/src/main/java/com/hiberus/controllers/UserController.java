@@ -2,6 +2,7 @@ package com.hiberus.controllers;
 
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.dto.UserDTO;
+import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.exceptions.UserBadRequestException;
 import com.hiberus.exceptions.UserNotFoundException;
 import com.hiberus.exceptions.UserUnauthorizedException;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,7 +55,11 @@ public class UserController {
 
     @GetMapping(value = "/favourites")
     public ResponseEntity<List<PizzaDTO>> favourites(@RequestParam UUID idUsuario) {
-        return ResponseEntity.ok(new ArrayList<>());
+        try {
+            return ResponseEntity.ok(userService.getFavourites(idUsuario));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping(value = "/{id}")
@@ -73,6 +77,8 @@ public class UserController {
             return ResponseEntity.ok(userService.addPizza(updatePizza));
         } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
+        }catch (PizzaNotFoundException e){
+            return ResponseEntity.badRequest().build();
         }
     }
 

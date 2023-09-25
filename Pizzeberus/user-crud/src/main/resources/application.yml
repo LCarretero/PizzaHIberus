@@ -9,4 +9,3 @@ spring:
       matching-strategy: ant_path_matcher
 
 KEYPASS: LegoLas
-PASSWORD: Smeagol

@@ -1,9 +1,12 @@
 package com.hiberus.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class PizzaDTO {
-    private final String name;
-
+    private String name;
 }
