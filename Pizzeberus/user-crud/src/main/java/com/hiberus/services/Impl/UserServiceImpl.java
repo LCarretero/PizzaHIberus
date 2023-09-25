@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,12 +44,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createUser(User user) throws UserBadRequestException {
         if (user.getName().isBlank() || user.getName().isEmpty()) throw new UserBadRequestException();
+        user.setFavouritesPizzas(new ArrayList<>());
         return UserMapper.INSTANCE.mapToDTO(userRepository.save(user));
     }
 
     @Override
-    public UserDTO updateUser(User user) throws UserNotFoundException {
-        User userFromDB = obtainUser(user.getId());
+    public UserDTO updateUser(String id, User user) throws UserNotFoundException {
+        User userFromDB = obtainUser(UUID.fromString(id));
         User userForDb = User.builder().id(userFromDB.getId()).name(user.getName()).favouritesPizzas(user.getFavouritesPizzas()).build();
         return UserMapper.INSTANCE.mapToDTO(saveUser(userForDb));
     }
@@ -63,8 +65,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
-        userDB.getFavouritesPizzas().add(updatePizza.getPizzaId());
-        List<PizzaDTO> userPizzas = clientsPizzas.obtainFavouritesPizzas(userDB.getFavouritesPizzas()).getBody();
+        List<UUID> favouritesPizzas = userDB.getFavouritesPizzas();
+        if (!favouritesPizzas.contains(updatePizza.getPizzaId()))
+            favouritesPizzas.add(updatePizza.getPizzaId());
+        List<PizzaDTO> userPizzas = (clientsPizzas.obtainFavouritesPizzas(favouritesPizzas)).getBody();
         saveUser(userDB);
         return new UserDTO(userPizzas, userDB.getName());
     }
@@ -74,13 +78,14 @@ public class UserServiceImpl implements UserService {
         User userDb = obtainUser(updatePizza.getUserId());
         if (userDb.getFavouritesPizzas().remove(updatePizza.getPizzaId()))
             return UserMapper.INSTANCE.mapToDTO(saveUser(userDb));
-        return UserMapper.INSTANCE.mapToDTO(userDb);
+        return new UserDTO(userPizzas, userDB.getName());
     }
 
     @Override
-    public List<PizzaDTO> getgetFavourites(UUID userId) throws UserNotFoundException {
+    public List<PizzaDTO> getFavourites(UUID userId) throws UserNotFoundException {
         User userDb = obtainUser(userId);
-        return clientsPizzas.obtainFavouritesPizzas(userDb.getFavouritesPizzas()).getBody();
+        List<UUID> favouritesPizzas = userDb.getFavouritesPizzas();
+        return clientsPizzas.obtainFavouritesPizzas(favouritesPizzas).getBody();
     }
 
     //region PRIVATE_METHODS

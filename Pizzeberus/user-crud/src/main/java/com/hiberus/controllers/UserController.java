@@ -58,10 +58,10 @@ public class UserController {
         return ResponseEntity.ok(new ArrayList<>());
     }
 
-    @PutMapping()
-    public ResponseEntity<UserDTO> updateUser(@RequestBody User user) {
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody User user) {
         try {
-            return ResponseEntity.ok(userService.updateUser(user));
+            return ResponseEntity.ok(userService.updateUser(id, user));
         } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
         }

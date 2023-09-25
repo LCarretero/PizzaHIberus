@@ -2,19 +2,8 @@ spring:
   application:
     name: gateway-server
   cloud:
-    gateway:
-      routes:
-        - id: user
-          uri: lb://user
-          predicates:
-            - Path=/user/**
-        - id: pizzaRead
-          uri: lb://pizzaRead
-          predicates:
-            - Path=/pizza/read/**
-        - id: pizzaWrite
-          uri: lb://pizzaWrite
-          predicates:
-            - Path=/pizza/write/**
-server:
-  port: 9000
+    config:
+      uri: http://localhost:8888
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

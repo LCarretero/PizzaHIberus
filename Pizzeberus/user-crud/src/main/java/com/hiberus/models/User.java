@@ -1,10 +1,7 @@
 package com.hiberus.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +20,7 @@ public class User {
     private UUID id;
     private String name;
     @ElementCollection
+    @Setter
     @CollectionTable(joinColumns = @JoinColumn(name = "id"))
-    @JsonIgnoreProperties
     private List<UUID> favouritesPizzas;
 }

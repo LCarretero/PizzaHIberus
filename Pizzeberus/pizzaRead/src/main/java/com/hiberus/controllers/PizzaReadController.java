@@ -35,7 +35,7 @@ public class PizzaReadController {
 
 
     @GetMapping(value = "/favs")
-    public ResponseEntity<List<PizzaDTO>> obtainFavouritesPizzas(@RequestBody List<UUID> idPizzas) {
+    public ResponseEntity<List<PizzaDTO>> obtainFavouritesPizzas(@RequestParam(name = "idPizzas") List<UUID> idPizzas) {
         return ResponseEntity.ok(pizzaService.getFavourites(idPizzas).stream()
                 .map(PizzaMapper.INSTANCE::mapToDTO)
                 .collect(Collectors.toList()));

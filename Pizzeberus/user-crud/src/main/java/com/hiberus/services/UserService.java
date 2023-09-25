@@ -18,7 +18,7 @@ public interface UserService {
 
     UserDTO createUser(User user) throws UserBadRequestException;
 
-    UserDTO updateUser(User user) throws UserNotFoundException;
+    UserDTO updateUser(String id, User user) throws UserNotFoundException;
 
     User deleteUser(UUID userId) throws UserNotFoundException;
 
@@ -26,5 +26,5 @@ public interface UserService {
 
     UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException;
 
-    List<PizzaDTO> getgetFavourites(UUID userId) throws UserNotFoundException;
+    List<PizzaDTO> getFavourites(UUID userId) throws UserNotFoundException;
 }
