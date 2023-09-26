@@ -5,7 +5,6 @@ import com.hiberus.exceptions.PizzaBadRequestException;
 import com.hiberus.exceptions.PizzaConflictException;
 import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.exceptions.PizzaUnauthorizedException;
-import com.hiberus.mapper.PizzaMapper;
 import com.hiberus.modelos.Pizza;
 import com.hiberus.repositorios.PizzaRepository;
 import com.hiberus.services.PizzaWriteService;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class PizzaWriteServiceImp implements PizzaWriteService {
@@ -36,8 +34,8 @@ public class PizzaWriteServiceImp implements PizzaWriteService {
     }
 
     @Override
-    public Pizza updatePizza(String password, Pizza pizza) throws PizzaNotFoundException, PizzaBadRequestException {
-        Pizza pizzaDB = getPizza(pizza.getId());
+    public Pizza updatePizza(String password, UUID id, PizzaDTO pizza) throws PizzaNotFoundException, PizzaBadRequestException {
+        Pizza pizzaDB = getPizza(id);
         if (pizzaDB == null)
             throw new PizzaNotFoundException();
         if (validName(pizza.getName()))

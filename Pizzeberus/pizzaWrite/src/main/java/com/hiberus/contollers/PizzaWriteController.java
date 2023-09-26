@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(value = "/pizza/write")
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class PizzaWriteController {
     @Autowired
     PizzaWriteService pizzaWriteService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<PizzaDTO> createPizza(@RequestHeader("Authorization") String password, @RequestBody PizzaDTO pizza) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(PizzaMapper.INSTANCE.mapToDTO(pizzaWriteService.createPizza(password, pizza.getName())));
@@ -32,10 +34,10 @@ public class PizzaWriteController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Pizza> updatePizza(String password, Pizza pizza) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Pizza> updatePizza(@RequestHeader("Authorization") String password, @PathVariable UUID id, @RequestBody PizzaDTO pizza) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pizzaWriteService.updatePizza(password, pizza));
+            return ResponseEntity.status(HttpStatus.CREATED).body(pizzaWriteService.updatePizza(password, id, pizza));
         } catch (PizzaNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (PizzaBadRequestException e) {

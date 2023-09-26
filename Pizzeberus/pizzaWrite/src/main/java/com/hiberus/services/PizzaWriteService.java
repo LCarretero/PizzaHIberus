@@ -8,10 +8,11 @@ import com.hiberus.exceptions.PizzaUnauthorizedException;
 import com.hiberus.modelos.Pizza;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface PizzaWriteService {
     Pizza createPizza(String password, String name) throws PizzaUnauthorizedException, PizzaConflictException;
 
-    Pizza updatePizza(String password, Pizza pizza) throws PizzaNotFoundException, PizzaBadRequestException;
+    Pizza updatePizza(String password, UUID id, PizzaDTO pizza) throws PizzaNotFoundException, PizzaBadRequestException;
 }
 
