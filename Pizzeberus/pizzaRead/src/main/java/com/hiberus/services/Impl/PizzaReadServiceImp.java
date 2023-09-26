@@ -5,10 +5,11 @@ import com.hiberus.modelos.Pizza;
 import com.hiberus.repositorios.PizzaRepository;
 import com.hiberus.services.PizzaReadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -31,9 +32,18 @@ public class PizzaReadServiceImp implements PizzaReadService {
     }
 
     @Override
-    public List<Pizza> getFavourites(List<UUID> pizzaIdList) {
+    public Set<Pizza> getFavourites(Set<UUID> pizzaIdList) {
         return pizzaIdList.stream()
                 .map(pizzaId -> pizzaRepository.findById(pizzaId).orElse(null))
-                .collect(Collectors.toList());
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public UUID getPizzaByName(String name) throws PizzaNotFoundException {
+        Pizza pizza = pizzaRepository.findByName(name).orElse(null);
+        if (pizza == null)
+            throw new PizzaNotFoundException();
+        return pizza.getId();
     }
 }

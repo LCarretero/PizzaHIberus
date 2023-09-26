@@ -30,7 +30,6 @@ public class PizzaWriteController {
         } catch (PizzaConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-
     }
 
     @PutMapping

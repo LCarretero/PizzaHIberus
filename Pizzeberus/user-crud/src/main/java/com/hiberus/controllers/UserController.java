@@ -9,27 +9,33 @@ import com.hiberus.exceptions.UserUnauthorizedException;
 import com.hiberus.models.UpdatePizza;
 import com.hiberus.models.User;
 import com.hiberus.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
 @RestController
 @RequestMapping(value = "/user")
+@Api(tags = "User-crud")
 public class UserController {
 
     @Autowired
     UserService userService;
 
     @PostMapping()
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "User created successfully")})
     public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
         try {
-            UserDTO result = userService.createUser(user);
-            return ResponseEntity.ok(result);
+            UserDTO userToDb = userService.createUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userToDb);
         } catch (UserBadRequestException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -54,7 +60,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/favourites")
-    public ResponseEntity<List<PizzaDTO>> favourites(@RequestParam UUID idUsuario) {
+    public ResponseEntity<Set<PizzaDTO>> favourites(@RequestParam UUID idUsuario) {
         try {
             return ResponseEntity.ok(userService.getFavourites(idUsuario));
         } catch (UserNotFoundException e) {
@@ -66,8 +72,10 @@ public class UserController {
     public ResponseEntity<UserDTO> updateUser(@PathVariable("id") String id, @RequestBody User user) {
         try {
             return ResponseEntity.ok(userService.updateUser(id, user));
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | PizzaNotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (UserBadRequestException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -77,7 +85,7 @@ public class UserController {
             return ResponseEntity.ok(userService.addPizza(updatePizza));
         } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
-        }catch (PizzaNotFoundException e){
+        } catch (PizzaNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -98,7 +106,6 @@ public class UserController {
         } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-
     }
 
 }

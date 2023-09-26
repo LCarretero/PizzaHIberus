@@ -55,7 +55,7 @@ public class PizzaWriteServiceImp implements PizzaWriteService {
     }
 
     private Pizza getPizzaByName(String name) {
-        return pizzaRepository.findByName(name);
+        return pizzaRepository.findByName(name).orElse(null);
     }
 
     private List<Pizza> obtainAllPizzas() {

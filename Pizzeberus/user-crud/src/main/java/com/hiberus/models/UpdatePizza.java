@@ -9,5 +9,5 @@ import java.util.UUID;
 @Getter
 public class UpdatePizza {
     private UUID userId;
-    private UUID pizzaId;
+    private String pizzaId;
 }

@@ -18,7 +18,6 @@ public class User {
     private UUID id;
     private String name;
     @ElementCollection
-    @Setter
     @CollectionTable(joinColumns = @JoinColumn(name = "id"))
     private Set<UUID> favouritesPizzas;
 }

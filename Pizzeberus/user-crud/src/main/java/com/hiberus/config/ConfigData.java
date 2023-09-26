@@ -29,11 +29,18 @@ public class ConfigData {
                     .build();
 
             User user3 = User.builder()
-                    .name("Matías")
+                    .name("Lisardo")
                     .id(UUID.fromString("829e17e6-7aab-4fa8-a76d-7167727c887e"))
                     .favouritesPizzas(new HashSet<>())
                     .build();
-            userRepository.saveAll(List.of(user1, user2, user3));
+
+            User user4 = User.builder()
+                    .name("PauPau")
+                    .id(UUID.fromString("60d5521d-52b2-4a12-acbb-116222bf99b3"))
+                    .favouritesPizzas(new HashSet<>())
+                    .build();
+
+            userRepository.saveAll(List.of(user1, user2, user3,user4));
         };
     }
 }

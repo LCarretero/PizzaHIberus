@@ -1,10 +1,12 @@
 package com.hiberus.services;
 
+import com.hiberus.dto.PizzaDTO;
 import com.hiberus.exceptions.PizzaNotFoundException;
 import com.hiberus.modelos.Pizza;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -14,6 +16,8 @@ public interface PizzaReadService {
 
     Pizza getPizza(UUID id) throws PizzaNotFoundException;
 
-    List<Pizza> getFavourites(List<UUID> pizzaIdList);
+    Set<Pizza> getFavourites(Set<UUID> pizzaIdList);
+
+    UUID getPizzaByName(String name) throws PizzaNotFoundException;
 
 }

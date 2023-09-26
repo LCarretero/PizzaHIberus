@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @FeignClient(name = "pizzaRead")
 public interface ClientsPizzas {
     @GetMapping(value = "/pizza/read/favs")
-    ResponseEntity<List<PizzaDTO>> obtainFavouritesPizzas(@RequestParam(name = "idPizzas") List<UUID> idPizzas);
+    ResponseEntity<Set<PizzaDTO>> obtainFavouritesPizzas(@RequestParam(name = "idPizzas") Set<UUID> idPizzas);
 
-    @GetMapping("/{id}")
+    @GetMapping("/pizza/read/{id}")
     ResponseEntity<PizzaDTO> getPizza(@PathVariable(name = "id") UUID id);
+    @GetMapping("/pizza/read")
+    ResponseEntity<UUID> getPizzaByName(@RequestParam(name = "name") String id);
 }

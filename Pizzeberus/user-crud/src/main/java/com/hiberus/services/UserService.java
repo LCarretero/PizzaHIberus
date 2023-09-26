@@ -2,14 +2,12 @@ package com.hiberus.services;
 
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.dto.UserDTO;
-import com.hiberus.exceptions.PizzaNotFoundException;
-import com.hiberus.exceptions.UserBadRequestException;
-import com.hiberus.exceptions.UserNotFoundException;
-import com.hiberus.exceptions.UserUnauthorizedException;
+import com.hiberus.exceptions.*;
 import com.hiberus.models.UpdatePizza;
 import com.hiberus.models.User;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface UserService {
@@ -19,13 +17,13 @@ public interface UserService {
 
     UserDTO createUser(User user) throws UserBadRequestException;
 
-    UserDTO updateUser(String id, User user) throws UserNotFoundException;
+    UserDTO updateUser(String id, User user) throws UserNotFoundException, PizzaNotFoundException, UserBadRequestException;
 
     User deleteUser(UUID userId) throws UserNotFoundException;
 
     UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException;
 
-    UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException;
+    UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaBadRequestException, PizzaNotFoundException;
 
-    List<PizzaDTO> getFavourites(UUID userId) throws UserNotFoundException;
+    Set<PizzaDTO> getFavourites(UUID userId) throws UserNotFoundException;
 }
