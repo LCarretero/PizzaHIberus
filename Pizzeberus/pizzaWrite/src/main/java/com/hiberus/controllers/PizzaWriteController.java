@@ -1,4 +1,4 @@
-package com.hiberus.contollers;
+package com.hiberus.controllers;
 
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.exceptions.PizzaBadRequestException;
@@ -9,7 +9,6 @@ import com.hiberus.mapper.PizzaMapper;
 import com.hiberus.modelos.Pizza;
 import com.hiberus.services.PizzaWriteService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ import java.util.UUID;
 @RequestMapping(value = "/pizza/write")
 @AllArgsConstructor
 public class PizzaWriteController {
-    @Autowired
+
     PizzaWriteService pizzaWriteService;
 
     @PostMapping

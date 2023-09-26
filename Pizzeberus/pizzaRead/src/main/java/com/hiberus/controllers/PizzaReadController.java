@@ -45,12 +45,11 @@ public class PizzaReadController {
     }
 
     @GetMapping
-    public ResponseEntity<UUID> getPizzaByName(@RequestParam(name = "name") String name){
+    public ResponseEntity<UUID> getPizzaByName(@RequestParam(name = "name") String name) {
         try {
             return ResponseEntity.ok(pizzaReadService.getPizzaByName(name));
-        }catch (PizzaNotFoundException e){
+        } catch (PizzaNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-
     }
 }
