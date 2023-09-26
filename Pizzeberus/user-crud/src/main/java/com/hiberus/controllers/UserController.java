@@ -12,7 +12,8 @@ import com.hiberus.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +25,14 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/user")
+@AllArgsConstructor
 @Api(tags = "User-crud")
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+
+    private final CircuitBreakerFactory circuitBreakerFactory;
+
 
     @PostMapping()
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User created successfully")})
@@ -42,7 +46,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable() UUID id) {
+    public ResponseEntity<User> getUser(@PathVariable() UUID id) {
         try {
             return ResponseEntity.ok(userService.getUser(id));
         } catch (UserNotFoundException e) {

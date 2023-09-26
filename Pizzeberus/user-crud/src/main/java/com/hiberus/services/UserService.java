@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface UserService {
-    UserDTO getUser(UUID userId) throws UserNotFoundException;
+    User getUser(UUID userId) throws UserNotFoundException;
 
     List<User> getAllUsers(String auth) throws UserUnauthorizedException;
 

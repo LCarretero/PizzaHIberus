@@ -13,28 +13,26 @@ import com.hiberus.models.UpdatePizza;
 import com.hiberus.models.User;
 import com.hiberus.repositories.UserRepository;
 import com.hiberus.services.UserService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
+
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private ClientsPizzas clientsPizzas;
-
     @Value(value = "${KEYPASS}")
     private String KEYPASS;
 
     @Override
-    public UserDTO getUser(UUID userId) throws UserNotFoundException {
-        return UserMapper.INSTANCE.mapToDTO(obtainUser(userId));
+    public User getUser(UUID userId) throws UserNotFoundException {
+        return obtainUser(userId);
     }
 
     @Override
@@ -77,6 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CircuitBreaker(name = "pizzaService", fallbackMethod = "fallbackPizzaService")
     public UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
         String pizzaName = updatePizza.getPizzaId();
@@ -90,6 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CircuitBreaker(name = "pizzaService", fallbackMethod = "fallbackPizzaService")
     public UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
         String pizzaName = updatePizza.getPizzaId();
@@ -128,7 +128,6 @@ public class UserServiceImpl implements UserService {
         return uuidStr != null && uuidStr.matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
     }
 
-
     private UUID isValidPizza(String pizza) throws PizzaNotFoundException {
         if (isUUID(pizza)) {
             try {
@@ -145,6 +144,10 @@ public class UserServiceImpl implements UserService {
 
         }
         return null;
+    }
+
+    private UserDTO fallbackPizzaService(UpdatePizza updatePizza, Throwable throwable) {
+        return new UserDTO(Collections.emptySet(), "The pizza service is unavailable");
     }
     //endregion
 }
