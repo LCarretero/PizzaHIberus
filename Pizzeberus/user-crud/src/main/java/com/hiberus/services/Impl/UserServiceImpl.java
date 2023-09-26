@@ -14,21 +14,17 @@ import com.hiberus.models.User;
 import com.hiberus.repositories.UserRepository;
 import com.hiberus.services.UserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ClientsPizzas clientsPizzas;
-    @Value(value = "${KEYPASS}")
-    private String KEYPASS;
+    private final UserRepository userRepository;
+    private final ClientsPizzas clientsPizzas;
+    private final String KEYPASS;
 
     @Override
     public User getUser(UUID userId) throws UserNotFoundException {
@@ -43,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(User user) throws UserBadRequestException {
-        if (isValidName(user.getName())) throw new UserBadRequestException();
+        if (!isValidName(user.getName())) throw new UserBadRequestException();
         User userToDB = User.builder().id(UUID.randomUUID()).favouritesPizzas(new HashSet<>()).name(user.getName()).build();
         return UserMapper.INSTANCE.mapToDTO(userRepository.save(userToDB));
     }
@@ -141,7 +137,6 @@ public class UserServiceImpl implements UserService {
             } catch (Exception e) {
                 throw new PizzaNotFoundException();
             }
-
         }
         return null;
     }

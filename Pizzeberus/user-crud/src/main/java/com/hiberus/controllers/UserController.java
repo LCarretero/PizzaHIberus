@@ -31,9 +31,6 @@ public class UserController {
 
     private final UserService userService;
 
-    private final CircuitBreakerFactory circuitBreakerFactory;
-
-
     @PostMapping()
     @ApiResponses(value = {@ApiResponse(code = 201, message = "User created successfully")})
     public ResponseEntity<UserDTO> createUser(@RequestBody User user) {
