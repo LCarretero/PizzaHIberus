@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
     @CircuitBreaker(name = "pizzaService", fallbackMethod = "fallbackPizzaService")
     public UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
-        String pizzaName = updatePizza.getPizzaId();
+        String pizzaName = updatePizza.getPizzaIdOrName();
         UUID id = isValidPizza(pizzaName);
         Set<UUID> favouritesPizzas = userDB.getFavouritesPizzas();
 
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @CircuitBreaker(name = "pizzaService", fallbackMethod = "fallbackPizzaService")
     public UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
-        String pizzaName = updatePizza.getPizzaId();
+        String pizzaName = updatePizza.getPizzaIdOrName();
         UUID id = isValidPizza(pizzaName);
         Set<UUID> favouritesPizzas = userDB.getFavouritesPizzas();
 

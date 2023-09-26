@@ -11,9 +11,9 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
 public class UserDTO {
     private Set<PizzaDTO> pizzas;
+    @Setter
     private String name;
 }
