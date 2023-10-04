@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(User user) throws UserBadRequestException {
-        if (!isValidName(user.getName())) throw new UserBadRequestException();
+        if (!isNameValid(user.getName())) throw new UserBadRequestException();
         User userToDB = User.builder().id(UUID.randomUUID()).favouritesPizzas(new HashSet<>()).name(user.getName()).build();
         return UserMapper.INSTANCE.mapToDTO(userRepository.save(userToDB));
     }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(String id, User user) throws UserNotFoundException, PizzaNotFoundException, UserBadRequestException {
         User userFromDB = obtainUser(UUID.fromString(id));
-        if (!isValidName(user.getName()))
+        if (!isNameValid(user.getName()))
             throw new UserBadRequestException();
         Set<PizzaDTO> pizzaDTOSet;
         try {
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO addPizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
         String pizzaName = updatePizza.getPizzaIdOrName();
-        UUID id = isValidPizza(pizzaName);
+        UUID id = isPizzaValid(pizzaName);
         Set<UUID> favouritesPizzas = userDB.getFavouritesPizzas();
 
         favouritesPizzas.add(isUUID(pizzaName) ? UUID.fromString(pizzaName) : id);
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO deletePizza(UpdatePizza updatePizza) throws UserNotFoundException, PizzaNotFoundException {
         User userDB = obtainUser(updatePizza.getUserId());
         String pizzaName = updatePizza.getPizzaIdOrName();
-        UUID id = isValidPizza(pizzaName);
+        UUID id = isPizzaValid(pizzaName);
         Set<UUID> favouritesPizzas = userDB.getFavouritesPizzas();
 
         favouritesPizzas.remove(isUUID(pizzaName) ? UUID.fromString(pizzaName) : id);
@@ -116,15 +116,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    private boolean isValidName(String name) {
-        return name != null && !name.trim().isEmpty() && !name.matches(".*\\d.*");
+    private boolean isNameValid(String name) {
+        return name != null && !name.trim().isEmpty() && name.matches("[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ]+$");
     }
 
     public boolean isUUID(String uuidStr) {
         return uuidStr != null && uuidStr.matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");
     }
 
-    private UUID isValidPizza(String pizza) throws PizzaNotFoundException {
+    private UUID isPizzaValid(String pizza) throws PizzaNotFoundException {
         if (isUUID(pizza)) {
             try {
                 clientsPizzas.getPizza(UUID.fromString(pizza)).getBody();

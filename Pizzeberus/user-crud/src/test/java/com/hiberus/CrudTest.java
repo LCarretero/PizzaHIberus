@@ -1,19 +1,48 @@
 package com.hiberus;
 
+import com.hiberus.clients.ClientsPizzas;
 import com.hiberus.dto.PizzaDTO;
 import com.hiberus.dto.UserDTO;
+import com.hiberus.exceptions.UserBadRequestException;
+import com.hiberus.exceptions.UserNotFoundException;
 import com.hiberus.mappers.UserMapper;
 import com.hiberus.models.UpdatePizza;
 import com.hiberus.models.User;
+import com.hiberus.repositories.UserRepository;
+import com.hiberus.services.Impl.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+
+@ExtendWith(MockitoExtension.class)
 class CrudTest {
+    private UserServiceImpl userService;
+    @Mock
+    private UserRepository userRepository;
+    @Mock
+    private ClientsPizzas clientsPizzas;
+    private User userTest;
+    private final UUID id = UUID.fromString("829e17e6-2222-3333-a76d-7167727c887e");
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        this.userService = new UserServiceImpl(this.userRepository, this.clientsPizzas, "LegoLas");
+        userTest = new User(id, "nameTest", new TreeSet<>());
+    }
+
+    //region MODEL_AND_DTO
     @Test
     void pizzaDTOTest() {
         PizzaDTO pizzaDTO = new PizzaDTO("Pizzeberus");
@@ -97,4 +126,39 @@ class CrudTest {
                 .build();
         Assertions.assertEquals(id, user.getId());
     }
+
+    //endregion
+    //region Service
+
+    @Test
+    void getUserTest() throws UserNotFoundException {
+        when(userRepository.findById(any())).thenReturn(Optional.ofNullable(userTest));
+        User user = userService.getUser(id);
+        Assertions.assertEquals(id, user.getId());
+    }
+
+    @Test
+    void getUserExceptionTest() {
+        when(userRepository.findById(any())).thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class, () -> userService.getUser(id));
+    }
+
+    @Test
+    void createUserTest() throws UserBadRequestException {
+        when(userRepository.save(any())).thenReturn(userTest);
+        UserDTO user = userService.createUser(userTest);
+        Assertions.assertEquals("nameTest", user.getName());
+    }
+
+    @Test
+    void createUserExceptionTest() throws UserBadRequestException {
+        User userWithBadName = new User(id, "1nameTest1", new TreeSet<>());
+        assertThrows(UserBadRequestException.class, () -> userService.createUser(userWithBadName));
+    }
+    @Test
+    void createUserExceptionEmptyNameTest() throws UserBadRequestException {
+        User userWithBadName = new User(id, "", new TreeSet<>());
+        assertThrows(UserBadRequestException.class, () -> userService.createUser(userWithBadName));
+    }
+    //endregion
 }
